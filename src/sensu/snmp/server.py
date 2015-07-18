@@ -75,7 +75,15 @@ class SensuTrapServer(object):
         event_output = trap_handler_config['event']['output']
         event_handlers = trap_handler_config['event']['handlers']
         event_severity = parse_event_severity(trap_handler_config['event']['severity'])
-
+        environment = None
+        servicetag = None
+        mail_to = None
+        if trap_handler_config['event'].has_key('environment'):
+            environment = trap_handler_config['event']['environment']
+        if trap_handler_config['event'].has_key('servicetag'):
+            servicetag = trap_handler_config['event']['servicetag']
+        if trap_handler_config['event'].has_key('mail_to'):
+            mail_to = trap_handler_config['event']['mail_to']
         # TODO: parse predicates
 
         # Initialize TrapHandler
@@ -85,6 +93,9 @@ class SensuTrapServer(object):
                                     event_output,
                                     event_handlers,
                                     event_severity,
+                                    environment,
+                                    servicetag,
+                                    mail_to,
                                     None)
         return trap_handler
 
